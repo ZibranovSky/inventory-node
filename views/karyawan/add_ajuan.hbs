@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> headerKaryawan}}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Tambah Ajuan Barang</h1>
+                    <!-- Button trigger modal -->
+                    {{#if error}}
+                  	<div class="alert alert-danger" role="alert">
+                      {{message}}
+                    </div>
+                    {{/if}}
+
+                  	<div class="container">
+                  		<div class="row">
+
+                  			<form action="/saveBarangAjuan" method="POST">
+
+                          <div class="form-group">
+                            <label>Kode Ajuan</label>
+                            <input type="text" class="form-control" name="kdajuan">
+                          </div>
+
+                  				<div class="form-group">
+                  					<label>Kode Barang</label>
+                  					<input type="text" id="kdbrg" class="form-control" name="kdbrg" readonly><span class="input-group-btn">
+									<button type="button" class="btn btn-primary btn-flat mt-2" data-toggle="modal" data-target="#modal">Cari Data Barang</button>
+                  				</div>
+
+                  				<div class="form-group">
+                  					<label>Nama Barang : </label>
+                  					<input type="text" class="form-control" id="nmbrg" name="nmbrg">
+                  				</div>
+
+                  				<div class="form-group">
+                  					<label>Supplier Barang : </label>
+                  					<input type="text" class="form-control" id="supplier" name="supplier">
+                  				</div>
+
+                  				<div class="form-group">
+                  					<label>Jumlah Barang : </label>
+                  					<input type="text" class="form-control" id="jmlbrg" name="jmlbrg">
+                  				</div>
+
+                  				<div class="form-group">
+                  					<label>Jumlah Ajuan : </label>
+                  					<input type="text" class="form-control" name="jmlajuan">
+                  				</div>
+
+                  				<div class="form-group">
+                  					<label>Tanggal Ajuan : </label>
+                  					<input type="date" class="form-control" name="tglajuan">
+                  				</div>
+
+                  				<input type="submit" class="btn btn-primary" value="tambah data" name="simpan">
+
+                  				
+                  			</form>
+                  		</div>
+                  	</div>
+
+
+                   
+            </div>
+
+            <!-- modal -->
+	<div id="modal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<form role="form" id="form-tambah" method="post" action="input.php">
+				<div class="modal-header">
+					<center>
+					<h3 class="modal-title">Pilih Siswa</h3>
+					</center>
+				</div>
+					<div class="modal-body">
+						
+						
+						
+						<div class="table-responsive">
+							
+						</div>
+							<table width="100%" class="table table-hover" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Supplier</th>
+                                        <th>Jumlah Barang</th>
+                                        <!--<th>Jenis Kelamin</th>
+                                        <th>Tempat</th>
+                                        <th>Alamat</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	{{#each results}}
+									<tr id="tb_barang" data-kdbrg="{{ kdbrg }}" data-nmbrg="{{ nama }}" data-supplier="{{ supplier }}"  data-jmlbrg="{{ jumlah }}">
+										<td>
+											{{ kdbrg }}
+										</td>
+										<td>
+											{{ nama }}
+										</td>
+										<td>
+											{{ supplier }}
+										</td>
+
+										<td>
+											{{ jumlah }}
+										</td>
+										
+									</tr>
+									{{/each}}
+                            </table>
+						
+						
+					</div>	
+					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+
+                
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {{> footerKaryawan}}
+<script type="text/javascript">
+    $(document).ready(function(){
+      
+      $(document).on('click', '#tb_barang', function (e) {
+        document.getElementById("kdbrg").value = $(this).attr('data-kdbrg');
+        document.getElementById("nmbrg").value = $(this).attr('data-nmbrg');
+        document.getElementById("supplier").value = $(this).attr('data-supplier');
+        document.getElementById("jmlbrg").value = $(this).attr('data-jmlbrg');
+        $('#modal').modal('hide');
+      }); 
+      
+    });
+    </script>
+</body>
+
+</html>

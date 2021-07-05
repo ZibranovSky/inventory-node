@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> header}}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Data Barang</h1>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2 mt-2" data-toggle="modal" data-target="#exampleModal">
+  Tambah Data
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/saveBarang" method="POST">
+
+            <div class="form-group">
+                <label>Kode Barang : </label>
+                <input type="text" class="form-control" name="kdbrg">
+            </div>
+
+
+
+            <div class="form-group">
+                <label>Nama Barang : </label>
+                <input type="text" class="form-control" name="nama">
+
+            </div>
+
+            <div class="form-group">
+                <label>Jumlah Barang : </label>
+                <input type="text" class="form-control" name="jumlah">
+
+            </div>
+
+            <div class="form-group">
+                <label>Supplier : </label>
+                <select class="form-control" name="supplier">
+                  {{#each supplier}}
+                    <option>{{ nama }}</option>
+                  {{/each}}
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Rak : </label>
+                <select class="form-control" name="rak">
+                  {{#each rak}}
+                    <option>{{ nama }}</option>
+                  {{/each}}
+                </select>
+
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Barang</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        
+                                            <th>Kode Barang</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jumlah Barang</th>
+                                            <th>Supplier Barang</th>
+                                            <th>Rak</th>
+                                            <th>Aksi</th>
+                                      
+                                        </tr>
+                                    </thead>
+                           
+                                    <tbody>
+                                        {{#each results}}
+                                        <tr>
+                                            <td>{{ kdbrg }}</td>
+                                            <td>{{ nama }}</td>
+                                            <td>{{ jumlah }}</td>
+                                            <td>{{ supplier }}</td>
+                                            <td>{{ rak }}</td>
+                                            
+                                            <td><!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalhapus{{ id }}">
+                                  Hapus Data
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalhapus{{ id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <b>Apakah Anda Yakin Ingin Menghapus Ini ?</b> <br>
+
+                                        <label>Kode Barang :  {{ kdrak }}</label><br>
+                                        <label>Nama Barang : {{ nama }}</label><br>
+                                        <label>Jumlah Barang : {{ jumlah }}</label><br>
+                                        <label>Supplier Barang : {{ supplier }}</label><br>
+                                        <label>Rak : {{ rak }}</label><br>
+                                      
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <a href="/hapusBarang/{{ id }}" class="btn btn-danger">Hapus</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit{{ id }}">
+                                  Edit Data
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalEdit{{ id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                       <form action="/updateBarang" method="POST">
+                                               <div class="form-group">
+                                                    <label>kode Barang : </label>
+                                                    <input type="text" class="form-control" value="{{ kdbrg }}" name="kdbrg">
+                                                </div>
+
+                                                <input type="text" value="{{ id }}" hidden="" name="id">
+
+                                                <div class="form-group">
+                                                    <label>Nama Barang : </label>
+                                                    <input type="text" class="form-control" value="{{ nama }}" name="nama">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Jumlah Barang : </label>
+                                                    <input type="text" class="form-control" value="{{ jumlah }}" name="jumlah">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Supplier Barang : </label>
+                                                    <input type="text" class="form-control" value="{{ supplier }}" name="supplier">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Rak Barang : </label>
+                                                    <input type="text" class="form-control" value="{{ rak }}" name="rak">
+
+                                                </div>
+                                      
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button class="btn btn-success" type="submit">Ubah Data</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </td>
+                                         
+                                        </tr>
+                                       {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {{> footer}}
+
+</body>
+
+</html>

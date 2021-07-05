@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> header}}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Data Supplier</h1>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2 mt-2" data-toggle="modal" data-target="#exampleModal">
+  Tambah Data
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Supplier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/saveSupplier" method="POST">
+
+            <div class="form-group">
+                <label>Nama Supplier : </label>
+                <input type="text" class="form-control" name="nama">
+            </div>
+
+
+            <div class="form-group">
+                <label>Alamat Supplier : </label>
+               <textarea name="alamat" class="form-control">
+                   
+               </textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Kontak Supplier</label>
+                <input type="text" class="form-control" name="kontak">
+
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Supplier</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Supplier</th>
+                                            <th>Alamat Supplier</th>
+                                            <th>kontak Supplier</th>
+                                            
+                                            <th>Aksi</th>
+                                      
+                                        </tr>
+                                    </thead>
+                           
+                                    <tbody>
+                                        {{#each results}}
+                                        <tr>
+                                            <td>{{ nama }}</td>
+                                            <td>{{ alamat }}</td>
+                                            <td>{{ kontak }}</td>
+                                            
+                                            <td><!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalhapus{{ id }}">
+                                  Hapus Data
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalhapus{{ id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <b>Apakah Anda Yakin Ingin Menghapus Ini ?</b> <br>
+
+                                        <label>Nama Supplier :  {{ nama }}</label><br>
+                                        <label>Alamat Supplier : {{ alamat }}</label><br>
+                                        <label>Kontak Supplier : {{ kontak }} </label>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <a href="/hapusSupplier/{{ id }}" class="btn btn-danger">Hapus</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEdit{{ id }}">
+                                  Edit Data
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalEdit{{ id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                       <form action="/updateSupplier" method="POST">
+                                               <div class="form-group">
+                                                    <label>Nama Supplier : </label>
+                                                    <input type="text" class="form-control" value="{{ nama }}" name="nama">
+                                                </div>
+
+                                                <input type="text" value="{{ id }}" hidden="" name="id">
+
+                                                <div class="form-group">
+                                                    <label>Alamat Supplier : </label>
+                                                   <textarea name="alamat" class="form-control"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Kontak Supplier</label>
+                                                    <input type="text" class="form-control" value="{{ kontak }}" name="kontak">
+
+                                                </div>
+                                      
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button class="btn btn-success" type="submit">Ubah Data</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </td>
+                                         
+                                        </tr>
+                                       {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            {{> footer}}
+
+</body>
+
+</html>
